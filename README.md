@@ -1,7 +1,7 @@
    # fosterfuzz
 This is a pre research repository for Summer Research 2019 at IIT Kanpur
 
-##### Simple steps to follow:
+### Simple steps to follow:
 
 1. Clone and get to the sampleProject directory and execute following
 ```sh
@@ -9,7 +9,7 @@ cd sampleProject && python ../scripts/shell.py
 ```
 The output will be logged to a file ```log.txt``` after each command you execute
 
-##### Sample interaction with the contract
+### Sample interaction with the contract
 
 1. without transaction
 ```javascript
@@ -21,7 +21,7 @@ normal.deployed().then(function(instance){instance.statechange(); return instanc
 
 ```
 
-##### contract used
+#### contract used
 ```solidity
 pragma solidity>=0.4.19;
 
@@ -45,7 +45,7 @@ contract normal{
 }
 ```
 
-##### Dependencies
+### Dependencies
 1. Truffle
 2. Python 3
 3. python-subprocess
