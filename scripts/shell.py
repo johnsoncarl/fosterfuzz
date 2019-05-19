@@ -10,8 +10,8 @@ while True:
 	if output == '' and process.poll() is not None:
 		break
 	if output:
-		print (output.strip())
-		file.write(str(output.strip())  + "\n")
+		print (">> " + str(output.strip().decode('utf-8')))
+		file.write(">> " + str(output.strip().decode('utf-8'))  + "\n")
 
 #file.close()
 rc = process.poll()
