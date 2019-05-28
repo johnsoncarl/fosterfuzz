@@ -1,5 +1,4 @@
 ## Descriptions
---------
 
 #### 1. uncheckedSend()
 Whenever a contract, say *sender*, transfers the *ether* to another contract,say *receiver*, the *payable* function of the *receiver* is triggered, and this can be misused. For eg. `payable` function of the *receiver* contains some computationally heavy instructions, it can cause `transfer() to fail` and `send() function to return false`. Thus if the `send()` is not checked, it may cause a bug called `uncheckedSend`.
@@ -47,4 +46,4 @@ Here, `echidna_send()` will be the main function whose `bool` value will be chec
 **So this is how it works:** [*a* is the instance if *contract attacker*]
 We first start running the contract with `a.flag == false`, and wait for a value in `set(int val)`, to flip the flag of `contract a` to `true`, and thus activating the revert in `payable`. This will fail everytime the payment is made. And since, the `send()` doesn't revery any exception, it shall revert true of false. Which is catched by `echidna_send()`, and will be returned to the tool, to state that the payment could not be completed.
 
-[View this thred for more about <address>.send and <address>.transfer](https://github.com/ethereum/solidity/issues/610)
+[View this thread for more about address.send and address.transfer](https://github.com/ethereum/solidity/issues/610)
