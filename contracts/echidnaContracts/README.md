@@ -1,4 +1,13 @@
 ## Descriptions
+Following are the bugs to be tested with their respective SWC registries.
+*[Marked are working with echidna]*
+- [ ] delegatecall (the proxy calls) *(SWC-112)* (Inclusion of Functionality from Untrusted Control Sphere)
+- [ ] Integer Overflow *(SWC - 101)*
+- [ ] Reentrancy Bug(DAO attack) *(Improper Enforcement of Behavioral Workflow) (SWC-107)*
+- [x] uncheckedSend() *(SWC - 113)*
+- [ ] tx.origin bug 
+- [ ] Variable Shadowing *(SWC-119)*
+
 
 #### 1. uncheckedSend()
 Whenever a contract, say *sender*, transfers the *ether* to another contract,say *receiver*, the *payable* function of the *receiver* is triggered, and this can be misused. For eg. `payable` function of the *receiver* contains some computationally heavy instructions, it can cause `transfer() to fail` and `send() function to return false`. Thus if the `send()` is not checked, it may cause a bug called `uncheckedSend`.
