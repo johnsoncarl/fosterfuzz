@@ -23,8 +23,13 @@ Interger overflow checks for the overflow bug while storing the integer within a
 
 It has two variables `count` and `lastCount`, the `echidna_test_addOverflow()` checks if the last count (*i.e. the value of `count` in previous run of function `run()`*) , is not larger than the value of current `count`.
 
+#### 3. reentrancy() *[problem with ether transfer to contract while deploying persists]*
+This contract `attacker` in the solidity file `reentrancy.sol` takes an instance of the already deployed `contract SimpleDAO`, and transfer the total amount of ether it has to instance of `SimpleDAO`. Now, `attacker` has a payable function which **siphons off** all the ethers in the SimpleDAO to itself. 
 
-#### 3. uncheckedSend()
+**NOTE: Still this contract cannot be tested and shows `NO TRANSACTION` error message on working with it. [Have to modify SimpleDAO a bit to make it work]**
+
+
+#### 4. uncheckedSend()
 Whenever a contract, say *sender*, transfers the *ether* to another contract,say *receiver*, the *payable* function of the *receiver* is triggered, and this can be misused. For eg. `payable` function of the *receiver* contains some computationally heavy instructions, it can cause `transfer() to fail` and `send() function to return false`. Thus if the `send()` is not checked, it may cause a bug called `uncheckedSend`.
 
 Also, since `send()` doesn't propogate the exception, its harmful of the users to use it. 
