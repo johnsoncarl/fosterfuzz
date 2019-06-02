@@ -3,7 +3,7 @@ Following are the bugs to be tested with their respective SWC registries.
 *[Marked are working with echidna]*
 - [ ] delegatecall (the proxy calls) *(SWC-112)* (Inclusion of Functionality from Untrusted Control Sphere)
 - [x] DoS With Block Gas Limit *(SWC - 128)*
-- [ ] Integer Overflow *(SWC - 101)*
+- [x] Integer Overflow *(SWC - 101)*
 - [ ] Reentrancy Bug(DAO attack) *(Improper Enforcement of Behavioral Workflow) (SWC-107)*
 - [x] uncheckedSend() *(SWC - 113)*
 - [ ] tx.origin bug 
@@ -18,7 +18,13 @@ DOS with Block Gas limit is A denial of service attack, where a host contract de
 ```
 Here to make the contract to always true change the upper bound of `i` to some lesser value, say `i<100`. Increase the value to fail it at a certain point.
 
-#### 2. uncheckedSend()
+#### 2. intergerOverflow()
+Interger overflow checks for the overflow bug while storing the integer within a contract.
+
+It has two variables `count` and `lastCount`, the `echidna_test_addOverflow()` checks if the last count (*i.e. the value of `count` in previous run of function `run()`*) , is not larger than the value of current `count`.
+
+
+#### 3. uncheckedSend()
 Whenever a contract, say *sender*, transfers the *ether* to another contract,say *receiver*, the *payable* function of the *receiver* is triggered, and this can be misused. For eg. `payable` function of the *receiver* contains some computationally heavy instructions, it can cause `transfer() to fail` and `send() function to return false`. Thus if the `send()` is not checked, it may cause a bug called `uncheckedSend`.
 
 Also, since `send()` doesn't propogate the exception, its harmful of the users to use it. 
