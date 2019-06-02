@@ -1,21 +1,15 @@
-contract Test {
-    
-    mapping(address => uint256) public balanceOf;
-    mapping(address => uint256) public lastBalanceOf;
-    address a; 
+contract IntegerOverflowMul {
+    uint public count = 2;
+    uint public lastCount = 0;
 
-	function set(uint val) public{
-		if(val % 10 == 0)	buy(val);
+    function run(uint input) public {
+		lastCount = count;        
+		count += (input);
+    }
+	
+	function echidna_test_addOverflow() public returns (bool){
+		if(count < lastCount )		return false;
+		else 						return true;
 	}
 
-    function buy(uint256 numTokens) public payable {
-        a = msg.sender;
-        lastBalanceOf[a] = balanceOf[a];
-        balanceOf[a] += numTokens;
-    }
-    
-    function echidna_testOverflow() public returns(bool){
-        if(lastBalanceOf[a] > balanceOf[a])
-            return true;
-    }
 }
