@@ -1,40 +1,27 @@
-contract TokenSale{
-	int variable;
+contract Tokensale {
+    uint public hardcap = 10000;
 
-	function update1(int _a) public{
-		variable = _a;
-	}
+    constructor() public{}
 
-	function returnVar1() public returns(int){
-		return variable;
-	}
+    function fetchCap() public constant returns(uint) {
+        return hardcap;
+    }
 }
 
+contract Presale is Tokensale {
+    uint public hardcap = 1000;
 
-contract PreSale is TokenSale{
-	int variable;
+    constructor() public{}
 
-
-	function update2(int _a) public{
-		variable = _a;
-	}
-
-	function returnVar2() public returns(int){
-		return variable;
-	}
+    function update(uint _a) public{
+        hardcap = _a;
+   // Tokensale.hardcap = _a + 10;
+    }
+    
+    function echidna_differentHardcaps() public returns (bool) {
+        return (hardcap != fetchCap());
+    }
+     
+    
 }
 
-
-contract Test{
-	bool flag=true;
-	PreSale P = new PreSale();
-
-	function set0(int val) public{
-		P.update2(val);
-	}
-
-	function echidna_shouldBeAlwaysTrue() public returns(bool){
-		flag = (P.returnVar1() == P.returnVar2());
-		return !flag;
-	}
-}

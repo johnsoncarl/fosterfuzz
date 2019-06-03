@@ -7,7 +7,7 @@ Following are the bugs to be tested with their respective SWC registries.
 - [ ] Reentrancy Bug(DAO attack) *(Improper Enforcement of Behavioral Workflow) (SWC-107)*
 - [x] uncheckedSend() *(SWC - 113)*
 - [ ] tx.origin bug 
-- [ ] Variable Shadowing *(SWC-119)*
+- [x] Variable Shadowing *(SWC-119)*
 
 #### 1. dos_gas.sol()
 DOS with Block Gas limit is A denial of service attack, where a host contract denies to perform its duties due to limited amount of gas provided for each transaction (*about 3 million*). 
@@ -76,3 +76,15 @@ Here, `echidna_send()` will be the main function whose `bool` value will be chec
 We first start running the contract with `a.flag == false`, and wait for a value in `set(int val)`, to flip the flag of `contract a` to `true`, and thus activating the revert in `payable`. This will fail everytime the payment is made. And since, the `send()` doesn't revery any exception, it shall revert true of false. Which is catched by `echidna_send()`, and will be returned to the tool, to state that the payment could not be completed.
 
 [View this thread for more about address.send and address.transfer](https://github.com/ethereum/solidity/issues/610)
+
+#### 5. variableShadowing()
+Here simply, I am checking whether on updating the value of `hardcap` of Presale, the value of `hardcap` in TokenSale doesn't get updated. 
+If something like this happen then the following condition returns `false`, thus failing the test.
+
+```
+function echidna_differentHardcaps() public returns (bool) {
+        return (hardcap != fetchCap());
+    }
+```
+
+Here, `fetchCap()` returns the value of `hardcap` variable in contract TokenSale.
