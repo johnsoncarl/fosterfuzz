@@ -4,6 +4,7 @@ This is a pre research repository for Summer Research 2019 at IIT Kanpur
 ### Instructions to setu ECHIDNA
 ##### [Method 1] Using docker
 - Install [Docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
+
 *It is possible that docker may not work at once. For that you need to install [Docker Compose](https://docs.docker.com/compose/install/)*
 - Now pulling the Docker Image and running it
 ```
@@ -22,6 +23,7 @@ docker run -t -v `pwd`:/src trailofbits/echidna echidna-test /src/examples/solid
 docker run -t -v `pwd`:/src trailofbits/echidna echidna-test /src/examples/solidity/basic/balance.sol TEST --config="/src/examples/solidity/basic/balance.yaml"
 ```
 > *TEST* : is the contract you want to FUZZ inside the specified file.
+
 > *balance.yaml* : is the config file. You need to put the complete path of it.
 
 
