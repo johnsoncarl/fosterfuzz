@@ -6,21 +6,22 @@ This is a pre research repository for Summer Research 2019 at IIT Kanpur
 - Install [Docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
 
 *It is possible that docker may not work at once. For that you need to install [Docker Compose](https://docs.docker.com/compose/install/)*
-- Now pulling the Docker Image and running it
-```
-docker pull trailofbits/echidna
-docker run trailofbits/echidna
-```
+
 - **Run the following command to FUZZ the contract**
-Clone Echidna repository -> `https://github.com/crytic/echidna.git` and run the following command while into it.
+Clone Echidna repository -> `https://github.com/crytic/echidna.git` and run the following command inside `echidna`.
+
 ```
-docker run -t -v `pwd`:/src trailofbits/echidna echidna-test /src/examples/solidity/basic/flags.sol
+docker build -t echidna .
+```
+- Inside echidna run following to fuzz the contract with path `/src/examples/solidity/basic/flags.sol`
+```
+docker run -t -v `pwd`:/src echidna echidna-test /src/examples/solidity/basic/flags.sol
 ```
 **Note:** *Here pwd is the current directory. `/src/examples/solidity/basic/flags.sol` is the path to the contract from current directory.*
 
 - Running the contract with a *configuration file*
 ```
-docker run -t -v `pwd`:/src trailofbits/echidna echidna-test /src/examples/solidity/basic/balance.sol TEST --config="/src/examples/solidity/basic/balance.yaml"
+docker run -t -v `pwd`:/src echidna echidna-test /src/examples/solidity/basic/balance.sol TEST --config="/src/examples/solidity/basic/balance.yaml"
 ```
 > *TEST* : is the contract you want to FUZZ inside the specified file.
 
