@@ -1,0 +1,11 @@
+### Checks
+*Test the contract @ [Remix IDE](https://remix.ethereum.org).*
+
+ [x] F1, F2 onwers are same
+ [x] superUser[onwer] == true
+ [x] totalSupply given by wrapper should be correct
+ [x] balance of owners must be equal to the total supply available
+ [x] balance transfer using wrapper function should work
+ [x] balance transfer when `require(superUser[msg.sender]);` is added, should not work
+ [ ] balance transfer by *low level* users should not work
+ [ ] //TODO
